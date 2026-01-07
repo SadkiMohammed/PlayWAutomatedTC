@@ -27,4 +27,9 @@ test.describe('Automatisation Exercises', () => {
     test('Test Case 4', async ({ page }) => {
       await tools.CreateAcountAndLogout(page);
     });
+
+    test('Test Case 5', async ({ page }) => {
+      await tools.CreateAcountAndLogout(page);
+      await tools.CreateAcountExisted(page);
+    });
 });

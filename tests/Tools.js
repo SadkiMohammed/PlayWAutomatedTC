@@ -152,5 +152,19 @@ class Tools {
         await page.locator(this.locatorLoginBtn).click();
         await expect(page.getByText(/Your email or password is incorrect!/i)).toBeVisible();
     }
+
+    async CreateAcountExisted(page) {
+        const name = this.RandomAlpha(12);
+        // 4) Click on 'Signup / Login'
+        await page.locator(this.locatorSignUpLogin).click();
+        // 5) Verify 'New User Signup!' is visible
+        await expect(page.getByRole('heading', { name: /new user signup!/i })).toBeVisible();
+        // 6) Enter name and email address
+        await page.locator(this.locatorSingupName).fill(name);
+        await page.locator(this.locatorSingupEmail).fill(this.generatedEmail);
+        // 7) Click 'Signup' button
+        await page.locator(this.locatorSingupButton).click();
+        await expect(page.getByText(/Email Address already exist!/i)).toBeVisible();
+    }
 }
     module.exports = {Tools};
