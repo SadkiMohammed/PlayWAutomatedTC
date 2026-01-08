@@ -10,7 +10,7 @@ test.describe('Automatisation Exercises', () => {
     await page.getByRole('button', { name: /accept all|tout accepter|consent/i }).click();
   });
 
-    /*test('Test Case 1', async ({ page }) => {
+    test('Test Case 1', async ({ page }) => {
       await tools.CreateAcountAndDelete(page);
     });
 
@@ -35,7 +35,7 @@ test.describe('Automatisation Exercises', () => {
 
     test('Test Case 6', async ({ page }) => {
       await tools.ContactUs(page);
-    });*/
+    });
 
     test('Test Case 7', async ({ page }) => {
       await tools.TestCases(page);
