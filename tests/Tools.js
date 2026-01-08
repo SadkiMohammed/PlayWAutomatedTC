@@ -2,6 +2,7 @@ const { expect } = require('@playwright/test');
 
 class Tools {
 
+    locatorHome = 'a[href="/"]';
     locatorSignUpLogin = 'a[href="/login"]';
     locatorSingupName = 'input[data-qa="signup-name"]';
     locatorSingupEmail = 'input[data-qa="signup-email"]';
@@ -28,6 +29,13 @@ class Tools {
     locatorLoginEmail = 'input[data-qa="login-email"]';
     locatorLoginPassword = 'input[data-qa="login-password"]';
     locatorLoginBtn = 'button[data-qa="login-button"]';
+    locatorContactUsBtn = 'a[href="/contact_us"]';
+    locatorName = 'input[data-qa="name"]';
+    locatorEmail = 'input[data-qa="email"]';
+    locatorSubject = 'input[data-qa="subject"]';
+    locatorMessage = 'textarea[data-qa="message"]';
+    locatorUploadFile = 'input[type="file"]';
+    locatorSubmit = 'input[type="submit"]';
 
     RandomAlpha(length = 8) {
         const letters = "abcdefghijklmnopqrstuvwxyz";
@@ -165,6 +173,20 @@ class Tools {
         // 7) Click 'Signup' button
         await page.locator(this.locatorSingupButton).click();
         await expect(page.getByText(/Email Address already exist!/i)).toBeVisible();
+    }
+
+    async ContactUs(page) {
+        await page.locator(this.locatorContactUsBtn).click();
+        await expect(page.getByRole('heading', { name: /Get In Touch/i })).toBeVisible();
+        await page.locator(this.locatorName).fill(this.RandomAlpha(12));
+        await page.locator(this.locatorEmail).fill(this.generatedEmail);
+        await page.locator(this.locatorSubject).fill(this.RandomAlpha(12));
+        await page.locator(this.locatorMessage).fill(this.RandomAlpha(12));
+        await page.setInputFiles(this.locatorUploadFile, 'C:/work/FormationPlayWright/tests/Files/CompteRendu.txt');
+        await page.locator(this.locatorSubmit).click();
+        /*page.on('dialog', async (dialog) => {await dialog.accept();});
+        await expect(page.locator('div', {hasText: /Success! Your details have been submitted successfully./i})).toBeVisible();
+        await page.locator(this.locatorHome).click();*/
     }
 }
     module.exports = {Tools};
