@@ -36,6 +36,7 @@ class Tools {
     locatorMessage = 'textarea[data-qa="message"]';
     locatorUploadFile = 'input[type="file"]';
     locatorSubmit = 'input[type="submit"]';
+    locatorTestCasesBtn = 'a[href="/test_cases"]';
 
     RandomAlpha(length = 8) {
         const letters = "abcdefghijklmnopqrstuvwxyz";
@@ -187,6 +188,11 @@ class Tools {
         /*page.on('dialog', async (dialog) => {await dialog.accept();});
         await expect(page.locator('div', {hasText: /Success! Your details have been submitted successfully./i})).toBeVisible();
         await page.locator(this.locatorHome).click();*/
+    }
+
+    async TestCases(page) {
+        await page.getByRole('link', { name: /^Test Cases$/i }).click();
+        await expect(page.locator('b', {hasText: /Test Cases/i})).toBeVisible();
     }
 }
     module.exports = {Tools};
