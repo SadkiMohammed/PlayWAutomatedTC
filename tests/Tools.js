@@ -37,6 +37,7 @@ class Tools {
     locatorUploadFile = 'input[type="file"]';
     locatorSubmit = 'input[type="submit"]';
     locatorTestCasesBtn = 'a[href="/test_cases"]';
+    locatorProductsBtn = 'a[href="/products"]';
 
     RandomAlpha(length = 8) {
         const letters = "abcdefghijklmnopqrstuvwxyz";
@@ -193,6 +194,21 @@ class Tools {
     async TestCases(page) {
         await page.getByRole('link', { name: /^Test Cases$/i }).click();
         await expect(page.locator('b', {hasText: /Test Cases/i})).toBeVisible();
+    }
+
+    async Products(page) {
+        const products = page.locator('.product-image-wrapper');
+        await page.locator(this.locatorProductsBtn).click();
+        await expect(page.getByRole('heading', {name: /All Products/i})).toBeVisible();
+        const count = await products.count();
+        console.log(count);
+        expect(count).toBeGreaterThan(0);
+        await page.locator('.choose').first().click();
+        await expect(page.locator('p', {hasText: /Category/i})).toBeVisible();
+        await expect(page.locator('span > span', { hasText: /Rs\./ })).toBeVisible();
+        await expect(page.locator('b', {hasText: /Availability:/i})).toBeVisible();
+        await expect(page.locator('b', {hasText: /Condition:/i})).toBeVisible();
+        await expect(page.locator('b', {hasText: /Brand:/i})).toBeVisible();
     }
 }
     module.exports = {Tools};
