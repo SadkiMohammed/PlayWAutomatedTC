@@ -38,6 +38,8 @@ class Tools {
     locatorSubmit = 'input[type="submit"]';
     locatorTestCasesBtn = 'a[href="/test_cases"]';
     locatorProductsBtn = 'a[href="/products"]';
+    locatorSearchBar = 'input[name="search"]';
+    locatorSearchBtn = 'button[id="submit_search"]';
 
     RandomAlpha(length = 8) {
         const letters = "abcdefghijklmnopqrstuvwxyz";
@@ -209,6 +211,17 @@ class Tools {
         await expect(page.locator('b', {hasText: /Availability:/i})).toBeVisible();
         await expect(page.locator('b', {hasText: /Condition:/i})).toBeVisible();
         await expect(page.locator('b', {hasText: /Brand:/i})).toBeVisible();
+    }
+
+    async SearchProducts(page) {
+        const products = page.locator('.product-image-wrapper');
+        await page.locator(this.locatorProductsBtn).click();
+        await expect(page.getByRole('heading', {name: /All Products/i})).toBeVisible();
+        await page.locator(this.locatorSearchBar).fill('T-Shirt');
+        await page.locator(this.locatorSearchBtn).click();
+        const count = await products.count();
+        console.log(count);
+        expect(count).toBeGreaterThan(0);
     }
 }
     module.exports = {Tools};

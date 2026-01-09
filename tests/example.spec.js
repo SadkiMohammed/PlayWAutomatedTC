@@ -44,4 +44,8 @@ test.describe('Automatisation Exercises', () => {
     test('Test Case 8', async ({ page }) => {
       await tools.Products(page);
     });
+
+    test('Test Case 9', async ({ page }) => {
+      await tools.SearchProducts(page);
+    });
 });
