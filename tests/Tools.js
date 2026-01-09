@@ -40,6 +40,8 @@ class Tools {
     locatorProductsBtn = 'a[href="/products"]';
     locatorSearchBar = 'input[name="search"]';
     locatorSearchBtn = 'button[id="submit_search"]';
+    locatorSubscriptionBtn = 'button[id="subscribe"]';
+    locatorSubscriptionEmail = 'input[id="susbscribe_email"]';
 
     RandomAlpha(length = 8) {
         const letters = "abcdefghijklmnopqrstuvwxyz";
@@ -222,6 +224,13 @@ class Tools {
         const count = await products.count();
         console.log(count);
         expect(count).toBeGreaterThan(0);
+    }
+
+    async Subscription(page) {
+        await expect(page.getByRole('heading', { name: /Subscription/i })).toBeVisible();
+        await page.locator(this.locatorSubscriptionEmail).fill(this.generatedEmail);
+        await page.locator(this.locatorSubscriptionBtn).click();
+        await expect(page.getByText(/You have been successfully subscribed!/i)).toBeVisible();
     }
 }
     module.exports = {Tools};
