@@ -46,6 +46,8 @@ class Tools {
     locatorAddFirstProductToCart = 'a[data-product-id="1"]'; 
     locatorContinueShoppingBtn = 'button[data-dismiss="modal"]';
     locatorAddSecondProductToCart = 'a[data-product-id="2"]'; 
+    locatorProductDetails = 'a[href="/product_details/1"]';
+    locatorAddToCartBtn = 'button[class="btn btn-default cart"]';
 
     RandomAlpha(length = 8) {
         const letters = "abcdefghijklmnopqrstuvwxyz";
@@ -260,6 +262,18 @@ class Tools {
         await expect(price1).toBeVisible();
         const price2 = await page.locator('p[class="cart_total_price"]', { hasText: /Rs\./ }).nth(1);
         await expect(price2).toBeVisible();
+    }
+
+    async AddMultipleProductsToCart(page) {
+        await page.locator(this.locatorProduct).click();
+        await page.locator(this.locatorProductDetails).click();
+        const qty = page.locator('#quantity');
+        await qty.fill('4');
+        await expect(qty).toHaveValue('4');
+        await page.locator(this.locatorAddToCartBtn).click();
+        await page.locator(this.locatorContinueShoppingBtn).click();
+        await page.getByRole('link', { name: /Cart/i }).click();
+        await expect(page.locator('button[class="disabled"]', { hasText: /4/ })).toBeVisible();
     }
 }
     module.exports = {Tools};
