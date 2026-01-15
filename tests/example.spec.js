@@ -60,4 +60,8 @@ test.describe('Automatisation Exercises', () => {
     test('Test Case 12', async ({ page }) => {
       await tools.AddProductToCart(page);
     });
+
+    test('Test Case 13', async ({ page }) => {
+      await tools.AddMultipleProductsToCart(page);
+    });
 });
